@@ -2,19 +2,20 @@
 import { Fragment } from 'react'
 import { Disclosure, Menu, Transition } from '@headlessui/react'
 import { Bars3Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import {NavLink} from 'react-router-dom'
 
 const navigation = [
-  { name: 'Dashboard', href: '#', current: true },
-  { name: 'Team', href: '#', current: false },
-  { name: 'Projects', href: '#', current: false },
-  { name: 'Calendar', href: '#', current: false },
+  { name: 'Team', href: '/employees'},
+  { name: 'Dashboard', href: '/'},
+  { name: 'Projects', href: '/projects'},
+  { name: 'Calendar', href: '/calendar'},
 ]
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(' ')
 }
 
-export default function Header() {
+export default function Header(props) {
   return (
     <Disclosure as="nav" className="bg-gray-900">
       {({ open }) => (
@@ -48,18 +49,25 @@ export default function Header() {
                 <div className="hidden sm:ml-6 sm:block">
                   <div className="flex space-x-4">
                     {navigation.map((item) => (
-                      <a
+                      <NavLink
                         key={item.name}
-                        href={item.href}
-                        className={classNames(
+                        to={item.href}
+                        /*className={classNames(
                           item.current ? 'no-underline bg-gray-900 text-white'
                           : 'no-underline text-gray-300 hover:bg-gray-700 hover:text-white',
                             'px-3 py-2 rounded-md text-sm font-medium'
-                        )}
+                        )}*/
+                        className={({isActive})=>{
+                            return 'no-underline px-3 py-2 rounded-md text-sm font-medium ' +
+                            (isActive ?
+                              'bg-gray-700 text-white'
+                              :
+                              'text-gray-300 hover:bg-gray-700 hover:text-white')
+                        }}
                         aria-current={item.current ? 'page' : undefined}
                       >
                         {item.name}
-                      </a>
+                      </NavLink>
                     ))}
                   </div>
                 </div>
@@ -151,6 +159,7 @@ export default function Header() {
               ))}
             </div>
           </Disclosure.Panel>
+          {props.children}
         </>
       )}
     </Disclosure>
