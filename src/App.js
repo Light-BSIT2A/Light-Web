@@ -1,5 +1,7 @@
 import './index.css';
 import Employee from './components/Employee';
+import EditEmployee from './components/EditEmployee';
+import AddEmployee from './components/AddEmployee'
 import { useState } from 'react';
 import {v4 as uuidv4} from 'uuid';
 function App() {
@@ -40,12 +42,23 @@ function App() {
 
     function updateEmployee(id, newName, newRole){
         const updatedEmployees = employees.map((employee)=>{
-            if (id == employee.id){
+            if (id === employee.id){
                 return {...employee, name: newName, role: newRole}
             }
             return employee;
         });
         setEmployees(updatedEmployees);
+    }
+
+    function NewEmployee(newName, newRole, newImage){
+        let newEmployee = {
+            id: uuidv4(),
+            name: newName,
+            role: newRole,
+            image: newImage
+        }
+        console.log(newImage);
+        setEmployees([...employees, newEmployee])
     }
 
     const showEmployees = true;
@@ -55,6 +68,11 @@ function App() {
                 <>
                     <div className="flex flex-wrap justify-center">
                         {employees.map((employee)=>{
+                            const editEmployee = <EditEmployee
+                                                    name={employee.name}
+                                                    role={employee.role}
+                                                    updateEmployee={updateEmployee}
+                                                    id={employee.id}/>
                             return(
                                 <Employee
                                     key={employee.id}
@@ -62,13 +80,14 @@ function App() {
                                     name={employee.name}
                                     role={employee.role}
                                     img={employee.img}
-                                    updateEmployee={updateEmployee}
+                                    editEmployee={editEmployee}
                                 />)
                         })}
                     </div>
+                    <AddEmployee newEmployee={NewEmployee}/>
                 </>
                 :
-                <p>you cannot see the employees</p>
+                <p>you cannot see the employees :P</p>
             }
         </div>
     );
