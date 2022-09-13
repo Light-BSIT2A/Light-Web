@@ -2,6 +2,7 @@ import './index.css';
 import Employee from './components/Employee';
 import EditEmployee from './components/EditEmployee';
 import AddEmployee from './components/AddEmployee'
+import Header from './components/Header'
 import { useState } from 'react';
 import {v4 as uuidv4} from 'uuid';
 function App() {
@@ -63,7 +64,8 @@ function App() {
 
     const showEmployees = true;
     return (
-        <div className="App">
+        <div className="App bg-gray-300 min-h-screen">
+            <Header/>
             {showEmployees?
                 <>
                     <div className="flex flex-wrap justify-center">
