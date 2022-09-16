@@ -1,6 +1,7 @@
 import {useState, useEffect} from 'react';
 import {useNavigate, useParams, Link} from 'react-router-dom';
 import {v4 as uuidv4} from 'uuid';
+import DefinitionSearch from '../components/DefinitionSearch';
 import PageNotFound from '../components/PageNotFound';
 export default function Definition(){
     const [word, setWord] = useState();
@@ -53,6 +54,7 @@ export default function Definition(){
     <>
         {word?
             <>
+                <DefinitionSearch/>
                 <h1>here is a definition: </h1>
                 {word.map((meaning)=>{
                     return (

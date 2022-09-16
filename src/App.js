@@ -18,7 +18,7 @@ function App() {
                     <Route path='/projects' element={<Projects/>}/>
                     <Route path='/calendar' element={<Calendar/>}/>
                     <Route path='/dictionary' element={<Dictionary/>}/>
-                    <Route path='/definition/:search' element={<Definition/>}/>
+                    <Route path='/dictionary/:search' element={<Definition/>}/>
                     <Route path='/404' element={<PageNotFound/>}/>
                     <Route path='*' element={<PageNotFound/>}/>
                 </Routes>
