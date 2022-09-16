@@ -6,6 +6,7 @@ import Calendar from './pages/Calendar'
 import Dictionary from './pages/Dictionary'
 import Definition from './pages/Definition';
 import Header from './components/Header'
+import PageNotFound from './components/PageNotFound';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 function App() {
     return (
@@ -18,6 +19,8 @@ function App() {
                     <Route path='/calendar' element={<Calendar/>}/>
                     <Route path='/dictionary' element={<Dictionary/>}/>
                     <Route path='/definition/:search' element={<Definition/>}/>
+                    <Route path='/404' element={<PageNotFound/>}/>
+                    <Route path='*' element={<PageNotFound/>}/>
                 </Routes>
             </Header>
         </BrowserRouter>

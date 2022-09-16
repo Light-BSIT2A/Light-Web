@@ -4,9 +4,7 @@ export default function Dictionary(){
     const [word, setWord] = useState('');
     const navigate = useNavigate();
 
-    useEffect(() => {
-        console.log('Dictionaty Page: State Updated ' + word)
-    }, [word]);
+    useEffect(() => {let _ = word}, [word]);
     //no dependency array ---> update for any state change
     //empty dependency array --> execute once
     //dependancy array ---> updates for specified state change
