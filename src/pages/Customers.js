@@ -14,7 +14,7 @@ export default function Customers(){
             <h1>Customers: </h1>
             {customers ?
                 customers.map((customer) => {
-                    return <p><Link to={'/customer/' + customer.id}>{customer.name}</Link></p>
+                    return <p key={customer.id}><Link to={'/customer/' + customer.id}>{customer.name}</Link></p>
                 })
                 :
                 null

@@ -21,6 +21,7 @@ export default function Customer(){
             setCustomer(data.customer)
         });
     }, []);
+
     return (
         <>
             {notFound? <p>the customer with the id {id} you are looking for is dead XD</p>
@@ -32,6 +33,23 @@ export default function Customer(){
                                 <p>{customer.name}</p>
                                 <p>{customer.industry}</p>
                             </div>
+                            <button onClick={(e) => {
+                                const url = baseUrl + 'api/customers/'+id
+                                fetch(url, {method: 'DELETE', headers:{
+                                    'Content-Type': 'application/json'
+                                }})
+                                .then((response)=>{
+                                    if (!response.ok){
+                                        throw new Error('Something went wrong!')
+                                    }
+                                    navigate('/customer')
+                                    //assume things went well ;D
+                                })
+                                .catch((e)=>{
+                                    console.log(e)
+                                })
+                            }}>Delete</button>
+                            <br/>
                             <Link to='/customer'>Go back</Link>
                         </>
                     :
@@ -41,4 +59,5 @@ export default function Customer(){
             }
         </>
     )
+
 }
