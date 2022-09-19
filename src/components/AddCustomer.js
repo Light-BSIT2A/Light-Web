@@ -5,24 +5,21 @@ export default function AddCustomer(props) {
     const [name, setName] = useState('');
     const [industry, setIndustry] = useState('');
 
-    const [show, setShow] = useState(false);
+    const [show, setShow] = useState(props.show);
 
     const handleClose_delete = () => {
-        setShow(false);
+        props.toggle();
         setName("");
         setIndustry("");
     };
-    const handleClose = () => {
-        setShow(false);
-    };
-    const handleShow = () => setShow(true);
+    const handleClose = () => setShow(false);
   return (
     <>
-        <button onClick={handleShow} className="block mx-auto m-2 bg-white hover:bg-gray-200 text-black py-2 px-4 rounded  border border-gray-600  focus:outline-none focus:shadow-outline">
+        <button onClick={props.toggle} className="block mx-auto m-2 bg-white hover:bg-gray-200 text-black py-2 px-4 rounded  border border-gray-600  focus:outline-none focus:shadow-outline">
             + Add Customer
         </button>
         <Modal
-            show={show}
+            show={props.show}
             onHide={handleClose}
             backdrop="static"
             keyboard={false}
@@ -94,7 +91,6 @@ export default function AddCustomer(props) {
             </button>
             <button
                 form="editModal"
-                onClick={handleClose}
                 className="bg-purple-600 hover:bg-purple-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
             >
                 Add

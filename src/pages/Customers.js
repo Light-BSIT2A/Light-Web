@@ -4,6 +4,10 @@ import AddCustomer from '../components/AddCustomer';
 import { baseUrl } from '../shared';
 export default function Customers(){
     const [customers, setCustomers] = useState();
+    const [show, setShow] = useState(false);
+
+    const toggleShow = () => setShow(!show);
+
     useEffect(() => {
         const url = baseUrl + 'api/customers/'
         fetch(url)
@@ -28,8 +32,9 @@ export default function Customers(){
             return response.json();
         })
         .then((data)=>{
-            //assume the add was succesful
-            //hide modal
+            toggleShow();
+            console.log()
+            setCustomers([...customers, data.customer])
             //update list
         })
         .catch((e)=>{
@@ -46,7 +51,7 @@ export default function Customers(){
                 :
                 null
             }
-            <AddCustomer newCustomer={newCustomer}/>
+            <AddCustomer newCustomer={newCustomer} show={show} toggle={toggleShow}/>
         </>
     )
 }
