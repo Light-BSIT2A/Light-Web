@@ -8,6 +8,7 @@ export default function Customer(){
     const [tempCustomer, setTempCustomer] = useState();
     const [notFound, setNotFound] = useState(false);
     const [changed, setChanged] = useState(false);
+    const [error, setError] = useState();
 
     const navigate = useNavigate();
     useEffect(() => {
@@ -17,11 +18,16 @@ export default function Customer(){
             if(response.status === 404){
                 setNotFound(true);
             }
+            if(!response.ok) throw new Error('Something went wrong :<')
             return response.json();
         })
         .then((data) => {
             setCustomer(data.customer);
             setTempCustomer(data.customer);
+            setError(undefined)
+        })
+        .catch((e)=>{
+            setError(e.message);
         });
     }, []);
     function updateCustomer(){
@@ -34,14 +40,17 @@ export default function Customer(){
             body: JSON.stringify(tempCustomer)
         })
         .then((response) => {
+            if (!response.ok) throw new Error('Something went wrong :<')
             return response.json()
         })
         .then((data) => {
             setChanged(false);
             setCustomer(data.customer)
-            console.log(data);
+            setError(undefined)
         })
-        .catch();
+        .catch((e) => {
+            setError(e.message);
+        });
     }
     const changeDetect = (name = tempCustomer.name, industry = tempCustomer.industry) => (name === customer.name)&&(industry === customer.industry)?setChanged(false):setChanged(true);
     return (
@@ -88,21 +97,23 @@ export default function Customer(){
                                 }})
                                 .then((response)=>{
                                     if (!response.ok){
-                                        throw new Error('Something went wrong!')
+                                        throw new Error('Something went wrong!');
                                     }
-                                    navigate('/customer')
+                                    setError(undefined);
+                                    navigate('/customer');
                                     //assume things went well ;D
                                 })
                                 .catch((e)=>{
-                                    console.log(e)
+                                    setError(e.message)
                                 })
                             }}>Delete</button>
-                            <br/>
-                            <Link to='/customer'>Go back</Link>
                         </>
                     :
                     null
                     }
+                    {error?<p>{error}</p>:null}
+                    <br/>
+                    <Link to='/customer'>Go back</Link>
                 </>
             }
         </>
