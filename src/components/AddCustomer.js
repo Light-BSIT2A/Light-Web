@@ -12,10 +12,10 @@ export default function AddCustomer(props) {
         setName("");
         setIndustry("");
     };
-    const handleClose = () => setShow(false);
+    const handleClose = () => props.toggle();
   return (
     <>
-        <button onClick={props.toggle} className="block mx-auto m-2 bg-white hover:bg-gray-200 text-black py-2 px-4 rounded  border border-gray-600  focus:outline-none focus:shadow-outline">
+        <button onClick={props.toggle} className="block m-2 bg-purple-600 hover:bg-purple-500 text-black py-2 px-4 rounded  border border-gray-600  focus:outline-none focus:shadow-outline">
             + Add Customer
         </button>
         <Modal

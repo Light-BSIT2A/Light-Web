@@ -30,7 +30,8 @@ export default function Customer(){
             setError(e.message);
         });
     }, []);
-    function updateCustomer(){
+    function updateCustomer(e){
+        e.preventDefault();
         const url = baseUrl + 'api/customers/' + id;
         fetch(url, {
             method: 'POST',
@@ -54,69 +55,107 @@ export default function Customer(){
     }
     const changeDetect = (name = tempCustomer.name, industry = tempCustomer.industry) => (name === customer.name)&&(industry === customer.industry)?setChanged(false):setChanged(true);
     return (
-        <>
-            {notFound? <p>the customer with the id {id} you are looking for is dead XD</p>
+        <div className='p-3'>
+            {notFound?
+                <p>the customer with the id {id} you are looking for is dead XD</p>
             :
                 <>
                     {customer?
                         <>
                             <div>
-                                <input
-                                    class="m-2 block px-2"
-                                    type="text"
-                                    value={tempCustomer.name}
-                                    onChange={(e)=>{
-                                        setTempCustomer({...tempCustomer, name:e.target.value})
-                                        changeDetect(e.target.value, undefined)
-                                    }}
-                                />
-                                <input
-                                    class="m-2 block px-2"
-                                    type="text"
-                                    value={tempCustomer.industry}
-                                    onChange={(e)=>{
-                                        setTempCustomer({...tempCustomer, industry:e.target.value})
-                                        changeDetect(undefined, e.target.value)
-                                    }}
-                                />
+                                <form id='customer' onSubmit={updateCustomer} className="w-full max-w-sm">
+                                    <div className="md:flex md:items-center mb-6">
+                                        <div className="md:w-1/3">
+                                            <label
+                                                className="block font-bold md:text-right mb-1 md:mb-0 pr-4"
+                                                for="customerName">Customer Name:</label>
+                                        </div>
+                                        <div className="md:w-2/3">
+                                            <input
+                                                className="block px-2 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                                                id = "customerName"
+                                                type="text"
+                                                value={tempCustomer.name}
+                                                onChange={(e)=>{
+                                                    setTempCustomer({...tempCustomer, name:e.target.value})
+                                                    changeDetect(e.target.value, undefined)
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+                                    <div className="md:flex md:items-center mb-6">
+                                        <div className="md:w-1/3">
+                                            <label
+                                                className="block font-bold md:text-right mb-1 md:mb-0 pr-4"
+                                                for="industry">Industry:</label>
+                                        </div>
+                                        <div className="md:w-2/3">
+                                            <input
+                                                className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
+                                                id="industry"
+                                                type="text"
+                                                value={tempCustomer.industry}
+                                                onChange={(e)=>{
+                                                    setTempCustomer({...tempCustomer, industry:e.target.value})
+                                                    changeDetect(undefined, e.target.value)
+                                                }}
+                                            />
+                                        </div>
+                                    </div>
+                                </form>
                                 {changed?
                                     <>
-                                        <button className = 'm-2' onClick={(e) => {
+                                        <button
+                                            className="mr-2 bg-gray-100 hover:bg-gray-200 text-black py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                            onClick={(e) => {
                                             setTempCustomer({...customer})
                                             setChanged(false)
                                         }}>Cancel</button>
-                                        <button className = 'm-2' onClick={updateCustomer}>Save</button>
+                                        <button
+                                            form = 'customer'
+                                            className="mb-2 bg-purple-600 hover:bg-purple-800 text-black py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                            >Save</button>
                                     </>
                                 :
                                 null}
+                            <div>
+                                <button
+                                    onClick={(e) => {
+                                        const url = baseUrl + 'api/customers/'+id
+                                        fetch(url, {method: 'DELETE', headers:{
+                                            'Content-Type': 'application/json'
+                                        }})
+                                        .then((response)=>{
+                                            if (!response.ok){
+                                                throw new Error('Something went wrong!');
+                                            }
+                                            setError(undefined);
+                                            navigate('/customer');
+                                            //assume things went well ;D
+                                        })
+                                        .catch((e)=>{
+                                            setError(e.message)
+                                        })
+                                    }}
+                                    className="bg-gray-400 hover:bg-gray-500 text-black py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                >Delete</button>
                             </div>
-                            <button onClick={(e) => {
-                                const url = baseUrl + 'api/customers/'+id
-                                fetch(url, {method: 'DELETE', headers:{
-                                    'Content-Type': 'application/json'
-                                }})
-                                .then((response)=>{
-                                    if (!response.ok){
-                                        throw new Error('Something went wrong!');
-                                    }
-                                    setError(undefined);
-                                    navigate('/customer');
-                                    //assume things went well ;D
-                                })
-                                .catch((e)=>{
-                                    setError(e.message)
-                                })
-                            }}>Delete</button>
-                        </>
+                        </div>
+                    </>
                     :
                     null
                     }
                     {error?<p>{error}</p>:null}
                     <br/>
-                    <Link to='/customer'>Go back</Link>
                 </>
             }
-        </>
+            
+            <Link
+                to='/customer'
+                className = "no-underline bg-purple-600 hover:bg-purple-800 text-black py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            >
+                Go back
+            </Link>
+        </div>
     )
-
 }

@@ -46,7 +46,14 @@ export default function Customers(){
             <h1>Customers: </h1>
             {customers ?
                 customers.map((customer) => {
-                    return <p key={customer.id}><Link to={'/customer/' + customer.id}>{customer.name}</Link></p>
+                    return <div key={customer.id}>
+                                <Link
+                                    className="m-2 block no-underline max-w-[300px] bg-gray-100 hover:bg-gray-200 text-black py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                    to={'/customer/' + customer.id}
+                                >
+                                        {customer.name}
+                                </Link>
+                            </div>
                 })
                 :
                 null
