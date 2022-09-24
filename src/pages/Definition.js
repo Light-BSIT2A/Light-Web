@@ -16,8 +16,6 @@ export default function Definition(){
             .then((response) => {
                 if (response.status === 404){
                     setNotFound(true)
-                } else if (response.status === 401){
-                    navigate('/login')
                 } else if (response.status === 500){
                     //setServerError(true)
                 }
