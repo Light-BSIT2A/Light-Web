@@ -1,5 +1,6 @@
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
+import { LoginContext } from '../App';
 import { baseUrl } from '../shared' 
 
 export default function Customer(){
@@ -9,6 +10,7 @@ export default function Customer(){
     const [notFound, setNotFound] = useState(false);
     const [changed, setChanged] = useState(false);
     const [error, setError] = useState();
+    const [loggedIn, setLoggedIn] = useContext(LoginContext);
 
     const navigate = useNavigate();
     const location = useLocation();
@@ -26,6 +28,7 @@ export default function Customer(){
                 setNotFound(true);
             }
             else if(response.status === 401){
+                setLoggedIn(false);
                 navigate('/login', {
                     state:{
                         previousURL: location.pathname
@@ -58,6 +61,7 @@ export default function Customer(){
         })
         .then((response) => {
             if(response.status === 401){
+                setLoggedIn(false);
                 navigate('/login', {
                     state:{
                         previousURL: location.pathname
@@ -154,6 +158,7 @@ export default function Customer(){
                                         })
                                         .then((response)=>{
                                             if(response.status === 401){
+                                                setLoggedIn(false);
                                                 navigate('/login', {
                                                     state:{
                                                         previousURL: location.pathname

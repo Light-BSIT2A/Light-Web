@@ -1,6 +1,6 @@
-import {useState, useEffect} from 'react';
-import {useNavigate, useParams, Link} from 'react-router-dom';
-import {v4 as uuidv4} from 'uuid';
+import { useState, useEffect } from 'react';
+import { useParams, Link } from 'react-router-dom';
+import { v4 as uuidv4 } from 'uuid';
 import DefinitionSearch from '../components/DefinitionSearch';
 import PageNotFound from '../components/PageNotFound';
 export default function Definition(){
@@ -8,7 +8,6 @@ export default function Definition(){
     const [notFound, setNotFound] = useState(false);
     const [error, setError] = useState(false);
     let {search} = useParams();
-    const navigate = useNavigate();
     useEffect(() => {
         //const url = 'https://httpstat.us/501'
         const url = 'https://api.dictionaryapi.dev/api/v2/entries/en/'+search
@@ -31,6 +30,7 @@ export default function Definition(){
             .catch((e) => {
                 console.log(e.message);
             });
+            // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
     if (notFound){
         return (
