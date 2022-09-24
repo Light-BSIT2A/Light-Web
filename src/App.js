@@ -10,6 +10,7 @@ import Customer from './pages/Customer';
 import Header from './components/Header'
 import PageNotFound from './components/PageNotFound';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
+import Login from './pages/Login';
 function App() {
     return (
         <BrowserRouter>
@@ -23,6 +24,7 @@ function App() {
                     <Route path='/customer/:id' element={<Customer/>}/>
                     <Route path='/dictionary' element={<Dictionary/>}/>
                     <Route path='/dictionary/:search' element={<Definition/>}/>
+                    <Route path='/login' element={<Login/>}/>
                     <Route path='/404' element={<PageNotFound/>}/>
                     <Route path='*' element={<PageNotFound/>}/>
                 </Routes>
