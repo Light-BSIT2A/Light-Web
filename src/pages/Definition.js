@@ -1,4 +1,4 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import { v4 as uuidv4 } from 'uuid';
 import DefinitionSearch from '../components/DefinitionSearch';
@@ -6,13 +6,8 @@ import PageNotFound from '../components/PageNotFound';
 import useFetch from '../hooks/useFetch';
 
 export default function Definition(){
-    //const [word, setWord] = useState();
-    //const [notFound, setNotFound] = useState(false);
-    //const [error, setError] = useState(false);
     let {search} = useParams();
-    const [word, errorStatus] = useFetch(
-        'https://api.dictionaryapi.dev/api/v2/entries/en/'+search
-    );
+    const {data: [{meanings: word}] = [{}], errorStatus} = useFetch('https://api.dictionaryapi.dev/api/v2/entries/en/'+search);
     if (errorStatus===404){
         return (
         <>
@@ -31,12 +26,12 @@ export default function Definition(){
     }
     return(
     <>
-        {word?.[0]?.meanings ?
+        {word ?
             (
                 <>
                     <DefinitionSearch/>
                     <h1>here is a definition: </h1>
-                    {word[0].meanings.map((meaning)=>{
+                    {word.map((meaning)=>{
                         return (
                             <p key={uuidv4()}>
                                 {meaning.partOfSpeech + ': '}

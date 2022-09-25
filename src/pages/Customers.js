@@ -2,23 +2,33 @@ import {useContext, useEffect, useState} from 'react';
 import {Link, useLocation, useNavigate} from 'react-router-dom';
 import { LoginContext } from '../App';
 import AddCustomer from '../components/AddCustomer';
+import useFetch from '../hooks/useFetch';
 import { baseUrl } from '../shared';
+
 export default function Customers(){
     const [loggedIn, setLoggedIn] = useContext(LoginContext);
-    const [customers, setCustomers] = useState();
+    //const [customers, setCustomers] = useState();
     const [show, setShow] = useState(false);
     const navigate = useNavigate();
     const location = useLocation();
-
+    
     const toggleShow = () => setShow(!show);
 
-    useEffect(() => {
-        const url = baseUrl + 'api/customers/'
+    const url = baseUrl + 'api/customers/'
+    const {
+        data: {customers} = {},
+        errorStatus} = useFetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem('access'),
+        }
+    });
+    useEffect(()=>console.log(customers, errorStatus));
+    /*useEffect(() => {
+        const url = 
         fetch(url, {
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: 'Bearer ' + localStorage.getItem('access'),
-            }
+            headers: 
         })
         .then((response) => {
             if(response.status === 401){
@@ -34,9 +44,10 @@ export default function Customers(){
         .then((data) => setCustomers(data.customers))
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+    */
 
     function newCustomer(name, industry){
-        const data = {name: name, industry: industry};
+        /*const data = {name: name, industry: industry};
         const url = baseUrl + 'api/customers/';
         fetch(url, {
             method: 'POST',
@@ -59,8 +70,9 @@ export default function Customers(){
         })
         .catch((e)=>{
             console.log(e);
-        });
+        });*/
     }
+
     return (
         <>
             <h1>Customers: </h1>
