@@ -67,12 +67,23 @@ export default function Header(props) {
                           {item.name}
                         </NavLink>
                       ))}
+                      {
+                      loggedIn ?
                       <NavLink
-                          to={loggedIn ? '/logout' : '/login'}
-                          className="no-underline px-3 py-2 rounded-md text-sm font-medium bg-gray-700 text-white"
-                        >
-                          {loggedIn ? "Logout" : "Login"}
-                        </NavLink>
+                          to= '/login'
+                          onClick = {()=>setLoggedIn(false)}
+                          className="no-underline px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                      >
+                        Logout
+                      </NavLink>
+                      :
+                      <NavLink
+                          to= '/login'
+                          className="no-underline px-3 py-2 rounded-md text-sm font-medium text-gray-300 hover:bg-gray-700 hover:text-white"
+                      >
+                        Login
+                      </NavLink>
+                      }
                     </div>
                   </div>
                 </div>
@@ -93,7 +104,7 @@ export default function Header(props) {
                         <img
                           className="h-8 w-8 rounded-full"
                           src="https://scontent.fmnl3-1.fna.fbcdn.net/v/t39.30808-6/299198461_763878828256886_3258026637235361374_n.jpg?_nc_cat=110&ccb=1-7&_nc_sid=09cbfe&_nc_eui2=AeF4Ce5lT4BJmfsSpGjQr0C6D5Ea3vT2Mk8PkRre9PYyT3rcpRq03I9OxIucoBB4TqaXYihD4iYhIKoZ4Rif5Q0N&_nc_ohc=LYw9oqnKEpcAX81rltQ&_nc_ht=scontent.fmnl3-1.fna&oh=00_AT-lQfC_bFoPCULXB6BH3Tcp1RCABnc4Jt0vJbYBohQWAQ&oe=6321EB5F"
-                          alt="User's profile picture"
+                          alt="User's pfp"
                         />
                       </Menu.Button>
                     </div>
@@ -110,7 +121,7 @@ export default function Header(props) {
                         <Menu.Item>
                           {({ active }) => (
                             <a
-                              href="#"
+                              href="/profile"
                               className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                             >
                               Your Profile
@@ -120,7 +131,7 @@ export default function Header(props) {
                         <Menu.Item>
                           {({ active }) => (
                             <a
-                              href="#"
+                              href="/settings"
                               className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                             >
                               Settings
@@ -130,7 +141,8 @@ export default function Header(props) {
                         <Menu.Item>
                           {({ active }) => (
                             <a
-                              href="#"
+                              href="/login"
+                              onClick = {()=>setLoggedIn(false)}
                               className={classNames(active ? 'bg-gray-100' : '', 'block px-4 py-2 text-sm text-gray-700')}
                             >
                               Sign out
@@ -162,12 +174,21 @@ export default function Header(props) {
                     {item.name}
                   </NavLink>
                 ))}
-                <NavLink
-                  to={loggedIn ? '/logout' : '/login'}
-                  className="no-underline bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
-                >
-                  {loggedIn ? "Logout" : "Login"}
-                </NavLink>
+                {loggedIn ?
+                  <NavLink
+                    to='/login'
+                    className="no-underline bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
+                  >
+                    Logout
+                  </NavLink>
+                :
+                  <NavLink
+                    to='/login'
+                    className="no-underline bg-gray-900 text-white block px-3 py-2 rounded-md text-base font-medium"
+                  >
+                    Login
+                  </NavLink>
+                }
               </div>
             </Disclosure.Panel>
           </>
