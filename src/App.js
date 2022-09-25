@@ -13,6 +13,7 @@ import PageNotFound from './components/PageNotFound';
 import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Login from './pages/Login';
 import { baseUrl } from './shared';
+import Register from './pages/Register';
 
 export const LoginContext = createContext();
 
@@ -65,6 +66,7 @@ function App() {
                         <Route path='/dictionary' element={<Dictionary/>}/>
                         <Route path='/dictionary/:search' element={<Definition/>}/>
                         <Route path='/login' element={<Login/>}/>
+                        <Route path='/register' element={<Register/>}/>
                         <Route path='/404' element={<PageNotFound/>}/>
                         <Route path='*' element={<PageNotFound/>}/>
                     </Routes>
