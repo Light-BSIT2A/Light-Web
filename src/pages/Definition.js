@@ -12,6 +12,7 @@ export default function Definition(){
     useEffect(()=>{
         request();
         console.log(search);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [search])
     
     if (errorStatus===404){

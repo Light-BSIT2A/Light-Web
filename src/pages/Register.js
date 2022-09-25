@@ -1,6 +1,7 @@
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import { LoginContext } from "../App";
+import useFetch from "../hooks/useFetch";
 import { baseUrl } from "../shared";
 
 
@@ -8,35 +9,51 @@ export default function Register(){
     const [username, setUsername] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
+    const [error, setError] = useState('');
     const location = useLocation();
     const navigate = useNavigate();
     const [loggedIn, setLoggedIn] = useContext(LoginContext);
 
+    const url = baseUrl + 'api/register/';
+    const {createData, data, errorStatus} = useFetch(url, {
+                                                    method: 'POST',
+                                                    headers:{
+                                                        'Content-Type': 'application/json'
+                                                    }
+                                                });
     function login(e){
+        let errorEncountered = false;
         e.preventDefault();
-        const url = baseUrl + 'api/register/';
-        fetch(url, {
-            method: 'POST',
-            headers:{
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify({
+        if (/\s/.test(username)){
+            errorEncountered = true;
+            setError('Spaces in username is not allowed.');
+        } else {
+            if (!username){
+                setError('Input username.');
+            } else if (!email){
+                setError('Input email.');
+            } else if (!password){
+                setError('Input password.');
+            }
+        }
+        if (!errorEncountered){
+            createData({
                 username: username,
                 email: email,
-                password: password
-            })
-        })
-            .then((response)=>{
-                return response.json();
-            })
-            .then((data)=>{
-                localStorage.setItem('access', data.access);
-                localStorage.setItem('refresh', data.refresh);
-                setLoggedIn(true)
-                navigate(location?.state?.previousURL ? location.state.previousURL : '/');
-            })
-            .catch();
+                password: password,
+            });
+        }
     }
+    useEffect(()=>{
+
+        if (data){
+            localStorage.setItem('access', data.access);
+            localStorage.setItem('refresh', data.refresh);
+            setLoggedIn(true)
+            navigate(location?.state?.previousURL ? location.state.previousURL : '/');
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [data, errorStatus])
     return (
         !loggedIn?
             <form id='customer' onSubmit={login} className="w-full max-w-sm">
@@ -88,6 +105,15 @@ export default function Register(){
                         />
                     </div>
                 </div>
+                {error?
+                    <p
+                        className="m-2 text-red-500 p-2"
+                    >
+                        {error}
+                    </p>
+                :
+                    null
+                }
                 <button
                     className="mb-2 bg-purple-600 hover:bg-purple-800 text-black py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                 >

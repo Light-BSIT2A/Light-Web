@@ -1,86 +1,43 @@
-import { useContext, useEffect, useState } from 'react';
-import { useParams, Link, useNavigate, useLocation } from 'react-router-dom';
-import { LoginContext } from '../App';
-import { baseUrl } from '../shared' 
+import { useEffect, useState } from 'react';
+import { useParams, Link, useNavigate } from 'react-router-dom';
+import useFetch from '../hooks/useFetch';
+import { baseUrl } from '../shared';
 
 export default function Customer(){
     const { id } = useParams();
-    const [customer, setCustomer] = useState();
     const [tempCustomer, setTempCustomer] = useState();
     const [notFound, setNotFound] = useState(false);
     const [changed, setChanged] = useState(false);
-    const [error, setError] = useState();
-    const [loggedIn, setLoggedIn] = useContext(LoginContext);
-
     const navigate = useNavigate();
-    const location = useLocation();
-    
+    const url = baseUrl + 'api/customers/' + id;
+    const { request, updateData, deleteData,
+        data:{customer} = {},
+        errorStatus} = useFetch(url, {
+        method: 'GET',
+        headers: {
+            'Content-Type': 'application/json',
+            Authorization: 'Bearer ' + localStorage.getItem('access'),
+        }
+    });
+
     useEffect(() => {
-        const url = baseUrl + 'api/customers/' + id;
-        fetch(url, {
-            headers: {
-                'Content-Type': 'application/json',
-                Authorization: 'Bearer ' + localStorage.getItem('access'),
-            }
-        })
-        .then((response) => {
-            if(response.status === 404){
-                setNotFound(true);
-            }
-            else if(response.status === 401){
-                setLoggedIn(false);
-                navigate('/login', {
-                    state:{
-                        previousURL: location.pathname
-                    }
-                });
-            }
-            if(!response.ok) throw new Error('Something went wrong :<')
-            return response.json();
-        })
-        .then((data) => {
-            setCustomer(data.customer);
-            setTempCustomer(data.customer);
-            setError(undefined)
-        })
-        .catch((e)=>{
-            setError(e.message);
-        });
+        request();
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
+    
+    useEffect(()=>{
+        if (errorStatus === 404){
+            setNotFound(true)
+        };
+        if (customer) setTempCustomer(customer);
+    }, [errorStatus, customer]);
+
     function updateCustomer(e){
         e.preventDefault();
-        const url = baseUrl + 'api/customers/' + id;
-        fetch(url, {
-            method: 'POST',
-            headers:{
-                'Content-Type': 'application/json',
-                Authorization: 'Bearer ' + localStorage.getItem('access'),
-            },
-            body: JSON.stringify(tempCustomer)
-        })
-        .then((response) => {
-            if(response.status === 401){
-                setLoggedIn(false);
-                navigate('/login', {
-                    state:{
-                        previousURL: location.pathname
-                    }
-                });
-            }
-            if (!response.ok) throw new Error('Something went wrong :<')
-            return response.json()
-        })
-        .then((data) => {
-            setChanged(false);
-            setCustomer(data.customer)
-            setError(undefined)
-        })
-        .catch((e) => {
-            setError(e.message);
-        });
+        updateData(tempCustomer);
+        setChanged(false);
     }
-    const changeDetect = (name = tempCustomer.name, industry = tempCustomer.industry) => (name === customer.name)&&(industry === customer.industry)?setChanged(false):setChanged(true);
+    const changeDetect = (name = tempCustomer.name, industry = tempCustomer.industry) => {(name === customer.name)&&(industry === customer.industry)?setChanged(false):setChanged(true);}
     return (
         <div className='p-3'>
             {notFound?
@@ -102,7 +59,7 @@ export default function Customer(){
                                                 className="block px-2 bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                                                 id = "customerName"
                                                 type="text"
-                                                value={tempCustomer.name}
+                                                value={tempCustomer?.name ? tempCustomer.name:customer.name}
                                                 onChange={(e)=>{
                                                     setTempCustomer({...tempCustomer, name:e.target.value})
                                                     changeDetect(e.target.value, undefined)
@@ -121,7 +78,7 @@ export default function Customer(){
                                                 className="bg-gray-200 appearance-none border-2 border-gray-200 rounded w-full py-2 px-4 text-gray-700 leading-tight focus:outline-none focus:bg-white focus:border-purple-500"
                                                 id="industry"
                                                 type="text"
-                                                value={tempCustomer.industry}
+                                                value={tempCustomer?.industry ? tempCustomer.industry:customer.industry}
                                                 onChange={(e)=>{
                                                     setTempCustomer({...tempCustomer, industry:e.target.value})
                                                     changeDetect(undefined, e.target.value)
@@ -148,33 +105,7 @@ export default function Customer(){
                             <div>
                                 <button
                                     onClick={(e) => {
-                                        const url = baseUrl + 'api/customers/'+id
-                                        fetch(url, {
-                                            method: 'DELETE',
-                                            headers:{
-                                                'Content-Type': 'application/json',
-                                                Authorization: 'Bearer ' + localStorage.getItem('access'),
-                                            }
-                                        })
-                                        .then((response)=>{
-                                            if(response.status === 401){
-                                                setLoggedIn(false);
-                                                navigate('/login', {
-                                                    state:{
-                                                        previousURL: location.pathname
-                                                    }
-                                                });
-                                            }
-                                            if (!response.ok){
-                                                throw new Error('Something went wrong!');
-                                            }
-                                            setError(undefined);
-                                            navigate('/customer');
-                                            //assume things went well ;D
-                                        })
-                                        .catch((e)=>{
-                                            setError(e.message)
-                                        })
+                                        deleteData({doAfterDelete:()=>navigate('/customer')})
                                     }}
                                     className="bg-gray-400 hover:bg-gray-500 text-black py-2 px-4 rounded focus:outline-none focus:shadow-outline"
                                 >Delete</button>
@@ -184,7 +115,7 @@ export default function Customer(){
                     :
                     null
                     }
-                    {error?<p>{error}</p>:null}
+                    {errorStatus?<p>{errorStatus}</p>:null}
                     <br/>
                 </>
             }
