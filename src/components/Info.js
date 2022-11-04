@@ -29,10 +29,10 @@ export function Image(props){
     return(
         <>
             <button onClick={switchOverlay}>
-                <img className = 'rounded-2xl inline-block m-3 w-[350px]' src={props.src} alt={props.alt}/>
+                <img className = 'rounded-2xl inline-block my-2 w-[350px] md:m-3' src={props.src} alt={props.alt}/>
             </button>
             {state?
-                overlay(<img className = 'rounded-2xl inline-block m-3 w-3/5 opacity-100' src={props.src} alt={props.alt}/>)
+                overlay(<img className = 'rounded-2xl inline-block m-3 w-full opacity-100 md:w-3/5' src={props.src} alt={props.alt}/>)
             :
                 null
             }

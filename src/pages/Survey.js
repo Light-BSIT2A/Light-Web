@@ -3,7 +3,7 @@ import Tab from "../components/Tabs";
 import GForm from "../components/GoogleForm"
 import PopUp from "../components/PopUpMessage";
 export default function Survey(){
-    const [survey, setSurvey] = useState("W");
+    const [survey, setSurvey] = useState("NW");
     /*
         W - Working Student
         NW - Non-Working Student
@@ -11,7 +11,7 @@ export default function Survey(){
     return(
             <>
                 <PopUp>
-                    <p>
+                    <p className="text-sm md: text-base">
                         &emsp;We, Peachy Core of BSIT 2A, would like to ask you for your help in answering the survey below.
                         <br/><br/>
                         &emsp;In partial fulfillment to our subject Introduction to  Human Computer Interaction, we are conducting a survey that will serve as the basis for the formulation of user requirements of our web application, U-CAN Job Search &mdash; Online.
@@ -29,13 +29,13 @@ export default function Survey(){
                     <GForm
                         title="Working Student Survey"
                         link="https://docs.google.com/forms/d/e/1FAIpQLSfpvk9znu5zxk-nxXSL2aJO9FyFHldHKf5C_QbyIz7R8UbHhg/viewform?embedded=true"
-                        classes="mx-auto w-full aspect-square"
+                        classes="mx-auto w-full h-screen md:h-2xl"
                     />
                 :
                     <GForm
                         title="Non-Working Student Survey"
                         link="https://docs.google.com/forms/d/e/1FAIpQLSd2xEOd4W-H7Z9CTuJU8sBtQ01wL2zRlMK0DVHTnmx2tIQOqA/viewform?embedded=true"
-                        classes="mx-auto w-full aspect-square"
+                        classes="mx-auto w-full h-screen md:h-2xl"
                     />
             }
         </>

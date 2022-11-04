@@ -18,20 +18,20 @@ export default function Tab(param) {
     return (
         <div className="text-sm font-medium text-center text-peach border-b border-light-pink">
             <ul className="flex flex-wrap -mb-px">
-                <li className="mr-2">
+                <li className="mr-1">
                     <button
-                        className={classNames(isTab1 ? activeTab : inactiveTab, "inline-block p-4 rounded-t-lg border-b-2")}
-                        onClick={changeTabs}
-                    >
-                        Working Student
-                    </button>
-                </li>
-                <li className="mr-2">
-                    <button
-                        className={classNames(isTab1 ? inactiveTab : activeTab, "inline-block p-4 rounded-t-lg border-b-2")}
+                        className={classNames(isTab1 ? inactiveTab : activeTab, "inline-block py-3 px-1 rounded-t-lg border-b-2 md:p-4")}
                         onClick={changeTabs}
                     >
                         Non-working Student
+                    </button>
+                </li>
+                <li className="">
+                    <button
+                        className={classNames(isTab1 ? activeTab : inactiveTab, "inline-block py-3 px-1 rounded-t-lg border-b-2 md:p-4")}
+                        onClick={changeTabs}
+                    >
+                        Working Student
                     </button>
                 </li>
             </ul>
