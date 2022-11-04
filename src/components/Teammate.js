@@ -21,9 +21,9 @@ export default function Teammate(props){
                     Socials:
                 </div>
                 <div className="space-x-5">
-                    <a href={props.fb} rel="noreferrer" target="_blank"><FontAwesomeIcon icon={faFacebook} className="fa-2x"/></a>
-                    <a href={props.gm} rel="noreferrer" target="_blank"><FontAwesomeIcon icon={faGoogle} className="fa-2x"/></a>
-                    <a href={props.ig} rel="noreferrer" target="_blank"><FontAwesomeIcon icon={faInstagram} className="fa-2x"/></a>
+                    <a href={props.fb} rel="noreferrer" target="_blank"><FontAwesomeIcon icon={faFacebook} className="fa-2x text-pink"/></a>
+                    <a href={props.gm} rel="noreferrer" target="_blank"><FontAwesomeIcon icon={faGoogle} className="fa-2x text-pink"/></a>
+                    <a href={props.ig} rel="noreferrer" target="_blank"><FontAwesomeIcon icon={faInstagram} className="fa-2x text-pink"/></a>
                 </div>
             </div>
 
