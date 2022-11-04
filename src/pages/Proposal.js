@@ -27,7 +27,7 @@ export default function Proposal(){
                 <p>
                     In the present year, statistics shows that it takes
                     about 6 months for someone to find a job &#40;
-                    <a href="https://www.topresume.com/career-advice/how-long-to-find-a-job">
+                    <a href="https://www.topresume.com/career-advice/how-long-to-find-a-job" className="no-underline text-pink">
                         Topresume, 2022
                     </a>&#41;. Taking into consideration the duties of
                     students to their course and studies, finding a
