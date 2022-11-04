@@ -1,8 +1,10 @@
 {
-  "name": "hello",
+  "name": "peachy_core",
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@fortawesome/free-brands-svg-icons": "^6.2.0",
+    "@fortawesome/react-fontawesome": "^0.2.0",
     "@headlessui/react": "^1.7.1",
     "@heroicons/react": "^2.0.11",
     "@testing-library/jest-dom": "^5.16.5",
