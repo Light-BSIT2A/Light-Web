@@ -12,14 +12,14 @@ const navigation = [
 export default function Header(props) {
   return (
     <>
-      <Disclosure as="nav" className="bg-pink">
+      <Disclosure as="nav" className="bg-indigo-600">
         {({ open }) => (
           <>
             <div className="mx-auto max-w-7xl px-2 sm:px-6 lg:px-8">
               <div className="relative flex h-12 items-center justify-between">
                 <div className="absolute inset-y-0 left-0 flex items-center sm:hidden">
                   {/* Mobile menu button*/}
-                  <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-peach hover:bg-light-pink hover:text-light-peach focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
+                  <Disclosure.Button className="inline-flex items-center justify-center rounded-md p-2 text-indigo-900 hover:bg-blue-900 hover:text-indigo-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white">
                     <span className="sr-only">Open main menu</span>
                     {open ? (
                       <XMarkIcon className="block h-6 w-6" aria-hidden="true" />
@@ -50,9 +50,9 @@ export default function Header(props) {
                           className={({isActive})=>{
                               return 'no-underline px-3 py-2 rounded-md text-sm font-medium ' +
                               (isActive ?
-                                'bg-light-pink text-white'
+                                'bg-indigo-700 text-white'
                                 :
-                                'text-light-peach hover:bg-light-pink hover:text-white')
+                                'text-indigo-300 hover:bg-indigo-600 hover:text-indigo-100')
                           }}
                           aria-current={item.current ? 'page' : undefined}
                         >
@@ -88,8 +88,8 @@ export default function Header(props) {
           </>
         )}
       </Disclosure>
-      <div className="bg-blue">
-        <div className='max-w-7xl mx-auto bg-light-peach min-h-screen px-2 py-2'>
+      <div className="bg-indigo-300">
+        <div className='max-w-7xl mx-auto bg-indigo-300 min-h-screen px-2 py-2'>
           {props.children}
         </div>
       </div>
