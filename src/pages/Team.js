@@ -2,24 +2,7 @@ import '../index.css';
 import Teammate from '../components/Teammate';
 export default function Team() {
     const team = [
-        {
-            id: 1,
-            name: "Renze Mortiga",
-            role: "BSIT2A",
-            img: require("../components/ref/renze_pic2.jpg"),
-            fb: "https://www.facebook.com/renzewithane",
-            gm: "mailto:renzemeinard@gmail.com",
-            ig: "https://instagram.com/renzewithane"
-        },
-        {
-            id: 2,
-            name: "Kai Yaneza",
-            role: "BSIT2A",
-            img:require("../components/ref/kai_pic2.jpg"),
-            fb: "https://www.facebook.com/yanezakai",
-            gm: "mailto:yanezalloydjemuel.sa@gmail.com",
-            ig: "https://instagram.com/theskyler08"
-        },
+        
     ]
 
     return (

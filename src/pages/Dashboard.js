@@ -5,7 +5,7 @@ export default function Dashboard(){
         <>
             {/*Banner*/}
             <img
-                src={require('../components/ref/Peachy Core Banner.png')}
+                src={require('../components/ref/light banner.png')}
                 alt="Peachy Core Banner"
                 className="w-3/5 mx-auto my-10"
             />

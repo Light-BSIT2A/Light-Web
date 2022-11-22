@@ -88,7 +88,7 @@ export default function Header(props) {
           </>
         )}
       </Disclosure>
-      <div className="bg-light-peach">
+      <div className="bg-blue">
         <div className='max-w-7xl mx-auto bg-light-peach min-h-screen px-2 py-2'>
           {props.children}
         </div>
