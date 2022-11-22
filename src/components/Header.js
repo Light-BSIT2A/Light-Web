@@ -5,9 +5,8 @@ import {NavLink} from 'react-router-dom'
 
 const navigation = [
   { name: 'Dashboard', href: '/'},
+  { name: 'Games', href: '/games'},
   { name: 'Team', href: '/team'},
-  { name: 'Proposal', href: '/proposal'},
-  { name: 'Survey', href: '/survey'},
 ]
 
 export default function Header(props) {
@@ -33,12 +32,12 @@ export default function Header(props) {
                   <div className="flex flex-shrink-0 items-center">
                     <img
                       className="block h-8 w-auto lg:hidden"
-                      src={require("./ref/Peachy Core Banner.png")}
+                      src={require("./ref/light banner.png")}
                       alt="Peachy Core"
                     />
                     <img
                       className="hidden h-8 w-auto lg:block"
-                      src={require("./ref/Peachy Core Banner.png")}
+                      src={require("./ref/light banner.png")}
                       alt="Peachy Core"
                     />
                   </div>
